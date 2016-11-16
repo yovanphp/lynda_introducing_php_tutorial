@@ -1,0 +1,3 @@
+1 - The timezone of wamp is set to Europe/Paris. This displays a wrong time. See which timezone to use.
+
+ 

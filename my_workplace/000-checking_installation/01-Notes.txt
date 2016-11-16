@@ -1,0 +1,41 @@
+1. When we run the phpinfo() function, we get 
+ - the version of the PHP used - 5.5.12
+ - The location of the loaded configuration file, php.ini : C:\wamp\bin\apache\apache2.4.9\bin\php.ini
+ - core/display_errors: On - by default in WAMP.
+ - core/error_reporting: must be 32767
+ - date/Default timezone: Europe/Paris
+
+ Note: 
+ - display_errors must be turned off in production environment, for security purposes.
+ - The default timezone must be set properly do that the correct time is used.
+
+All these settings can be changed within the php.ini file.
+
+2. If we can't edit the php.ini file directly (for example the service provider hosting our app does not gives us access), we can still define a .htaccess file in the server's document root folder. This will only work if the server is running apache.
+Configuration directives that set a value are preceded by php_value.
+Directives that turn a setting on or off are preceded by php_flag
+
+For example:
+# Apache does not know E_ALL constant so we use 32767
+php_value error_reporting 32767
+php_flag display_errors on
+php_value date.timezone America/Los_Angeles
+
+Some servers use .user.ini file instead of .htaccess
+For example:
+; The configuration directives use the same syntax as php.ini
+error_reporting E_ALL
+display_errors = on
+date.timezone = America/Los_Angeles
+
+If neither of these alternatives are available to us and if we simply want to change settings on the fly at runtime temporarily for a specific script: 
+<?php
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', '1');
+date_default_timezone_set('America/Los_Angeles');
+
+E_ALL is a constant but 1 is a string, hence the latter is in quotes.
+
+
+
+
